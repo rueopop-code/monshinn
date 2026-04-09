@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>รายการร้านมนชิน</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f9f9f9; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: white; border-radius: 10px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card img { width: 100%; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🏪 รายการร้านมนชิน</h1>
+    <div id="product-list" class="grid">กำลังโหลดข้อมูล...</div>
+
+    <script>
+        // *** วางลิงก์ API URL ของคุณที่ได้จาก SheetDB ตรงนี้ ***
+        const url = 'ใส่ลิงก์_SHEETDB_ตรงนี้';
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                let html = '';
+                data.forEach(item => {
+                    html += `
+                        <div class="card">
+                            <img src="${item.image_url}">
+                            <h3>${item.name}</h3>
+                            <p>ราคา ${item.price} บาท</p>
+                        </div>`;
+                });
+                document.getElementById('product-list').innerHTML = html;
+            })
+            .catch(err => console.error('Error:', err));
+    </script>
+</body>
+</html>
